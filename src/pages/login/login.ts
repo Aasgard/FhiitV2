@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import {IonicPage, NavController, NavParams} from 'ionic-angular';
+import {TabsPage} from "../tabs/tabs";
 
 @IonicPage()
 @Component({
@@ -21,6 +22,7 @@ export class LoginPage {
 
     public onGoogleLoginButtonClicked(): void {
         console.log('onGoogleLoginButtonClicked::clicked()');
+        this.navCtrl.push(TabsPage);
     }
 
 }
