@@ -22,7 +22,9 @@ export class LoginPage {
 
     public onGoogleLoginButtonClicked(): void {
         console.log('onGoogleLoginButtonClicked::clicked()');
-        this.navCtrl.push(TabsPage);
+        this.navCtrl.push(TabsPage, {}, {
+            animation: 'ios-transition'
+        });
     }
 
 }
