@@ -1,25 +1,22 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-
-/**
- * Generated class for the WorkoutsPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import {Component} from '@angular/core';
+import {IonicPage, NavController, NavParams} from 'ionic-angular';
 
 @IonicPage()
 @Component({
-  selector: 'page-workouts',
-  templateUrl: 'workouts.html',
+    selector: 'page-workouts',
+    templateUrl: 'workouts.html',
 })
 export class WorkoutsPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-  }
+    constructor(public navCtrl: NavController, public navParams: NavParams) {
+        // let intervalId = setInterval(() => {
+        //     this.secondes = this.secondes - 1;
+        //     if (this.secondes === 0) clearInterval(intervalId)
+        // }, 1000)
+    }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad WorkoutsPage');
-  }
+    ionViewDidLoad() {
+        console.log('ionViewDidLoad WorkoutsPage');
+    }
 
 }

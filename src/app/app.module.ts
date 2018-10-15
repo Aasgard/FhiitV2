@@ -10,6 +10,18 @@ import {LoginPage} from "../pages/login/login";
 import {WorkoutsPage} from "../pages/workouts/workouts";
 import {ExercisesPage} from "../pages/exercises/exercises";
 import {OptionsPage} from "../pages/options/options";
+import {AngularFireModule} from "@angular/fire";
+import {AngularFireAuthModule} from "@angular/fire/auth";
+import {GooglePlus} from "@ionic-native/google-plus";
+
+const firebaseConf = {
+    apiKey: "AIzaSyDsRZHPp-TGqvU-0GqyWKFDcLjQWJD7HLo",
+    authDomain: "fhiit-a70a6.firebaseapp.com",
+    databaseURL: "https://fhiit-a70a6.firebaseio.com",
+    projectId: "fhiit-a70a6",
+    storageBucket: "fhiit-a70a6.appspot.com",
+    messagingSenderId: "969579804181"
+};
 
 @NgModule({
     declarations: [
@@ -23,7 +35,9 @@ import {OptionsPage} from "../pages/options/options";
     ],
     imports: [
         BrowserModule,
-        IonicModule.forRoot(MyApp)
+        IonicModule.forRoot(MyApp),
+        AngularFireModule.initializeApp(firebaseConf),
+        AngularFireAuthModule
     ],
     bootstrap: [IonicApp],
     entryComponents: [
@@ -38,7 +52,8 @@ import {OptionsPage} from "../pages/options/options";
     providers: [
         StatusBar,
         SplashScreen,
-        {provide: ErrorHandler, useClass: IonicErrorHandler}
+        {provide: ErrorHandler, useClass: IonicErrorHandler},
+        GooglePlus
     ]
 })
 export class AppModule {
