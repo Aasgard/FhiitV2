@@ -1,4 +1,4 @@
-import {IonicPage, LoadingController, NavController, NavParams, Platform} from 'ionic-angular';
+import {IonicPage, LoadingController, NavController, NavParams, Platform, ToastController} from 'ionic-angular';
 import {GooglePlus} from "@ionic-native/google-plus";
 import * as firebase from "firebase";
 import {auth, User} from "firebase";
@@ -22,6 +22,7 @@ export class LoginPage {
                 private afAuth: AngularFireAuth,
                 private loadingCtrl: LoadingController,
                 private gplus: GooglePlus,
+                private toasterCtrl: ToastController,
                 private platform: Platform) {
         this.afAuth.user.subscribe(user => {
             this.loggedUser = user;
@@ -52,22 +53,35 @@ export class LoginPage {
 
     private nativeGoogleLogin(): void {
         const loader = this.loadingCtrl.create();
+        this.signoutCurrentUser();
 
         if (!this.loggedUser) {
             loader.present();
-            this.gplus.login({
-                'webClientId': '826626010601-fcjt337ot5qahroestmkdnisn53tlm3u5.apps.googleusercontent.com'
-            }).then(user => {
+
+            from(this.gplus.login({
+                'webClientId': '969579804181-5937s2r50gac8mmm5k9qn9nhk0mmhhtq.apps.googleusercontent.com'
+            })).finally(() => {
+                loader.dismiss();
+            }).subscribe( user => {
                 this.afAuth.auth.signInWithCredential(firebase.auth.GoogleAuthProvider.credential(user.idToken)).then(userConnected => {
                     if (userConnected) {
                         this.loggedUser = userConnected;
+                        this.navCtrl.setRoot(TabsPage, {}, {
+                            animation: 'ios-transition'
+                        });
                     }
                 }).catch(error => {
-                    alert(JSON.stringify(error));
+                    let toast = this.toasterCtrl.create({
+                        message: error,
+                        duration: 2000
+                    });
                 })
-            }).catch(err => {
-                alert(JSON.stringify(err));
-            })
+            }, error => {
+                let toast = this.toasterCtrl.create({
+                    message: error,
+                    duration: 2000
+                });
+            });
         }
     }
 
@@ -80,6 +94,17 @@ export class LoginPage {
                 });
             }
         });
+    }
+
+    private signoutCurrentUser(): void {
+        from(this.afAuth.auth.signOut()).subscribe(() => {
+            this.loggedUser = null;
+        }, (error) => {
+            let errorToast = this.toasterCtrl.create({
+                message: error,
+                duration: 2000
+            });
+        })
     }
 
 }

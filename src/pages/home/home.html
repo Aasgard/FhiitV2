@@ -7,8 +7,27 @@
 <ion-content padding>
     <ion-card>
 
+        <ion-card-header>
+            Utilisateur connecté
+        </ion-card-header>
+
         <ion-card-content>
-            Page d'accueil
+
+            <p><strong>Name :</strong> {{ loggedInUser?.displayName }}</p>
+            <p><strong>Mail :</strong> {{ loggedInUser?.email }}</p>
+            <p><strong>Téléphone :</strong> {{ loggedInUser?.phoneNumber ? loggedInUser?.phoneNumber : 'NC' }}</p>
+            <p><strong>Uuid :</strong> {{ loggedInUser?.uid }}</p>
+
+        </ion-card-content>
+
+    </ion-card>
+
+    <ion-card>
+
+        <ion-card-content>
+
+            <img src="{{ loggedInUser?.photoURL }}" alt="avatar">
+
         </ion-card-content>
 
     </ion-card>
