@@ -53,36 +53,43 @@ export class LoginPage {
 
     private nativeGoogleLogin(): void {
         const loader = this.loadingCtrl.create();
-        this.signoutCurrentUser();
 
-        if (!this.loggedUser) {
-            loader.present();
+        from(this.afAuth.auth.signOut()).subscribe(() => {
+            this.loggedUser = null;
+            if (!this.loggedUser) {
+                loader.present();
 
-            from(this.gplus.login({
-                'webClientId': '969579804181-5937s2r50gac8mmm5k9qn9nhk0mmhhtq.apps.googleusercontent.com'
-            })).finally(() => {
-                loader.dismiss();
-            }).subscribe( user => {
-                this.afAuth.auth.signInWithCredential(firebase.auth.GoogleAuthProvider.credential(user.idToken)).then(userConnected => {
-                    if (userConnected) {
-                        this.loggedUser = userConnected;
-                        this.navCtrl.setRoot(TabsPage, {}, {
-                            animation: 'ios-transition'
+                from(this.gplus.login({
+                    'webClientId': '969579804181-5937s2r50gac8mmm5k9qn9nhk0mmhhtq.apps.googleusercontent.com'
+                })).finally(() => {
+                    loader.dismiss();
+                }).subscribe(user => {
+                    this.afAuth.auth.signInWithCredential(firebase.auth.GoogleAuthProvider.credential(user.idToken)).then(userConnected => {
+                        if (userConnected) {
+                            this.loggedUser = userConnected;
+                            this.navCtrl.setRoot(TabsPage, {}, {
+                                animation: 'ios-transition'
+                            });
+                        }
+                    }).catch(error => {
+                        let toast = this.toasterCtrl.create({
+                            message: error,
+                            duration: 2000
                         });
-                    }
-                }).catch(error => {
+                    })
+                }, error => {
                     let toast = this.toasterCtrl.create({
                         message: error,
                         duration: 2000
                     });
-                })
-            }, error => {
-                let toast = this.toasterCtrl.create({
-                    message: error,
-                    duration: 2000
                 });
+            }
+        }, (error) => {
+            let errorToast = this.toasterCtrl.create({
+                message: error,
+                duration: 2000
             });
-        }
+        });
     }
 
     private webGoogleLogin(): void {
@@ -94,17 +101,6 @@ export class LoginPage {
                 });
             }
         });
-    }
-
-    private signoutCurrentUser(): void {
-        from(this.afAuth.auth.signOut()).subscribe(() => {
-            this.loggedUser = null;
-        }, (error) => {
-            let errorToast = this.toasterCtrl.create({
-                message: error,
-                duration: 2000
-            });
-        })
     }
 
 }
