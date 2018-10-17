@@ -13,7 +13,7 @@ export class HomePage {
 
     constructor(public navCtrl: NavController, private afAuth: AngularFireAuth) {
         this.afAuth.user.subscribe(connectedUser => {
-            console.log(connectedUser);
+            console.log('ConnectedUser', connectedUser);
             this.loggedInUser = connectedUser;
         });
     }

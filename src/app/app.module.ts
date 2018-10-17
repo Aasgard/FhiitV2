@@ -15,6 +15,7 @@ import {AngularFireAuthModule} from "@angular/fire/auth";
 import {GooglePlus} from "@ionic-native/google-plus";
 import {AngularFireDatabaseModule} from "@angular/fire/database";
 import {AngularFireStorageModule} from "@angular/fire/storage";
+import { Media } from '@ionic-native/media';
 
 const firebaseConf = {
     apiKey: "AIzaSyDsRZHPp-TGqvU-0GqyWKFDcLjQWJD7HLo",
@@ -54,10 +55,11 @@ const firebaseConf = {
         OptionsPage
     ],
     providers: [
+        Media,
         StatusBar,
+        GooglePlus,
         SplashScreen,
-        {provide: ErrorHandler, useClass: IonicErrorHandler},
-        GooglePlus
+        {provide: ErrorHandler, useClass: IonicErrorHandler}
     ]
 })
 export class AppModule {

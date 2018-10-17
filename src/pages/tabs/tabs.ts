@@ -19,4 +19,8 @@ export class TabsPage {
 
     constructor(private navCtrl: NavController) {
     }
+
+    ionViewDidEnter() {
+        this.tabRef.select(3);
+    }
 }
