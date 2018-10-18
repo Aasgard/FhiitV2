@@ -1,5 +1,7 @@
 import {Component} from '@angular/core';
 import {ActionSheetController, IonicPage, NavController, NavParams} from 'ionic-angular';
+import {IExercise} from "../../datacenter/models/exercise-model";
+import {AngularFireDatabase} from "@angular/fire/database";
 
 @IonicPage()
 @Component({
@@ -8,11 +10,20 @@ import {ActionSheetController, IonicPage, NavController, NavParams} from 'ionic-
 })
 export class ExercisesPage {
 
-    constructor(public navCtrl: NavController, public navParams: NavParams, private actionSheetCtrl: ActionSheetController) {
+    public exercisesList: IExercise[] = [];
+
+    constructor(public navCtrl: NavController, public navParams: NavParams, private actionSheetCtrl: ActionSheetController, private db: AngularFireDatabase) {
     }
 
     ionViewDidLoad() {
         console.log('ionViewDidLoad ExercisesPage');
+        // this.db.object('exercises').valueChanges().subscribe(wsReturn => {
+        //     console.log(wsReturn);
+        // });
+        const pushId = this.db.createPushId();
+        this.db.object(`exercises/${pushId}`).set({
+            test: pushId
+        });
     }
 
     public onExerciseItemClicked(): void {

@@ -21,6 +21,6 @@ export class TabsPage {
     }
 
     ionViewDidEnter() {
-        this.tabRef.select(3);
+        this.tabRef.select(2);
     }
 }

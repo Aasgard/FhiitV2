@@ -28,6 +28,12 @@
             <ion-item-divider color="light">
                 <ion-label>A</ion-label>
             </ion-item-divider>
+            <button ion-item detail-none (click)="onExerciseItemClicked()" *ngFor="let exercise of exercisesList">
+                <ion-icon name="flame" color="danger" item-start></ion-icon>
+                <ion-label>Dips</ion-label>
+                <ion-icon name="menu" item-end></ion-icon>
+                <!--<p>I've had a pretty messed up day. If we just...</p>-->
+            </button>
         </ion-item-group>
         <ion-item-group>
             <ion-item-divider color="light">
