@@ -15,7 +15,9 @@ import {AngularFireAuthModule} from "@angular/fire/auth";
 import {GooglePlus} from "@ionic-native/google-plus";
 import {AngularFireDatabaseModule} from "@angular/fire/database";
 import {AngularFireStorageModule} from "@angular/fire/storage";
-import { Media } from '@ionic-native/media';
+import {Media} from '@ionic-native/media';
+import {HttpClientModule} from "@angular/common/http";
+import {MockupsProvider} from "../providers/mockups/mockups";
 
 const firebaseConf = {
     apiKey: "AIzaSyDsRZHPp-TGqvU-0GqyWKFDcLjQWJD7HLo",
@@ -42,7 +44,8 @@ const firebaseConf = {
         AngularFireModule.initializeApp(firebaseConf),
         AngularFireAuthModule,
         AngularFireDatabaseModule,
-        AngularFireStorageModule
+        AngularFireStorageModule,
+        HttpClientModule
     ],
     bootstrap: [IonicApp],
     entryComponents: [
@@ -59,7 +62,8 @@ const firebaseConf = {
         StatusBar,
         GooglePlus,
         SplashScreen,
-        {provide: ErrorHandler, useClass: IonicErrorHandler}
+        {provide: ErrorHandler, useClass: IonicErrorHandler},
+        MockupsProvider
     ]
 })
 export class AppModule {

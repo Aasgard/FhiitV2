@@ -2,7 +2,7 @@ export interface IExercise {
     id: string;
     name: string;
     isFavorite: boolean;
-    desription: string;
+    description: string;
     creationDate: string;
-    lastUpdateDate: string;
+    lastEditDate: string;
 }
