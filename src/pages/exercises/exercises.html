@@ -11,153 +11,17 @@
                 <ion-icon name="star" item-start></ion-icon>
                 <ion-label>Favoris</ion-label>
             </ion-item-divider>
-            <button ion-item detail-none (click)="onExerciseItemClicked()">
-                <ion-icon name="flame" color="danger" item-start></ion-icon>
-                <ion-label>Squats</ion-label>
-                <ion-icon name="menu" item-end></ion-icon>
-                <!--<p>I've had a pretty messed up day. If we just...</p>-->
-            </button>
-            <button ion-item detail-none (click)="onExerciseItemClicked()">
-                <ion-icon name="flame" color="danger" item-start></ion-icon>
-                <ion-label>Dips</ion-label>
-                <ion-icon name="menu" item-end></ion-icon>
-                <!--<p>I've had a pretty messed up day. If we just...</p>-->
-            </button>
         </ion-item-group>
-        <ion-item-group>
+        <ion-item-group *ngFor="let categoryLetter of sortedExercicesListKeys">
             <ion-item-divider color="light">
-                <ion-label>A</ion-label>
+                <ion-label>{{ categoryLetter }}</ion-label>
             </ion-item-divider>
-            <button ion-item detail-none *ngFor="let exercise of exercisesList" (click)="onExerciseItemClicked(exercise)">
+            <button ion-item detail-none *ngFor="let exercise of sortedExercicesList[categoryLetter]"
+                    (click)="onExerciseItemClicked(exercise)">
                 <ion-icon name="flame" color="danger" item-start *ngIf="exercise.isFavorite"></ion-icon>
                 <ion-label>{{ exercise.name }}</ion-label>
                 <ion-icon name="menu" item-end></ion-icon>
             </button>
-        </ion-item-group>
-        <ion-item-group>
-            <ion-item-divider color="light">
-                <ion-label>B</ion-label>
-            </ion-item-divider>
-        </ion-item-group>
-        <ion-item-group>
-            <ion-item-divider color="light">
-                <ion-label>C</ion-label>
-            </ion-item-divider>
-        </ion-item-group>
-        <ion-item-group>
-            <ion-item-divider color="light">
-                <ion-label>D</ion-label>
-            </ion-item-divider>
-        </ion-item-group>
-        <ion-item-group>
-            <ion-item-divider color="light">
-                <ion-label>E</ion-label>
-            </ion-item-divider>
-        </ion-item-group>
-        <ion-item-group>
-            <ion-item-divider color="light">
-                <ion-label>F</ion-label>
-            </ion-item-divider>
-        </ion-item-group>
-        <ion-item-group>
-            <ion-item-divider color="light">
-                <ion-label>G</ion-label>
-            </ion-item-divider>
-        </ion-item-group>
-        <ion-item-group>
-            <ion-item-divider color="light">
-                <ion-label>H</ion-label>
-            </ion-item-divider>
-        </ion-item-group>
-        <ion-item-group>
-            <ion-item-divider color="light">
-                <ion-label>I</ion-label>
-            </ion-item-divider>
-        </ion-item-group>
-        <ion-item-group>
-            <ion-item-divider color="light">
-                <ion-label>J</ion-label>
-            </ion-item-divider>
-        </ion-item-group>
-        <ion-item-group>
-            <ion-item-divider color="light">
-                <ion-label>K</ion-label>
-            </ion-item-divider>
-        </ion-item-group>
-        <ion-item-group>
-            <ion-item-divider color="light">
-                <ion-label>L</ion-label>
-            </ion-item-divider>
-        </ion-item-group>
-        <ion-item-group>
-            <ion-item-divider color="light">
-                <ion-label>M</ion-label>
-            </ion-item-divider>
-        </ion-item-group>
-        <ion-item-group>
-            <ion-item-divider color="light">
-                <ion-label>N</ion-label>
-            </ion-item-divider>
-        </ion-item-group>
-        <ion-item-group>
-            <ion-item-divider color="light">
-                <ion-label>O</ion-label>
-            </ion-item-divider>
-        </ion-item-group>
-        <ion-item-group>
-            <ion-item-divider color="light">
-                <ion-label>P</ion-label>
-            </ion-item-divider>
-        </ion-item-group>
-        <ion-item-group>
-            <ion-item-divider color="light">
-                <ion-label>Q</ion-label>
-            </ion-item-divider>
-        </ion-item-group>
-        <ion-item-group>
-            <ion-item-divider color="light">
-                <ion-label>R</ion-label>
-            </ion-item-divider>
-        </ion-item-group>
-        <ion-item-group>
-            <ion-item-divider color="light">
-                <ion-label>S</ion-label>
-            </ion-item-divider>
-        </ion-item-group>
-        <ion-item-group>
-            <ion-item-divider color="light">
-                <ion-label>T</ion-label>
-            </ion-item-divider>
-        </ion-item-group>
-        <ion-item-group>
-            <ion-item-divider color="light">
-                <ion-label>U</ion-label>
-            </ion-item-divider>
-        </ion-item-group>
-        <ion-item-group>
-            <ion-item-divider color="light">
-                <ion-label>V</ion-label>
-            </ion-item-divider>
-        </ion-item-group>
-        <ion-item-group>
-            <ion-item-divider color="light">
-                <ion-label>W</ion-label>
-            </ion-item-divider>
-        </ion-item-group>
-        <ion-item-group>
-            <ion-item-divider color="light">
-                <ion-label>X</ion-label>
-            </ion-item-divider>
-        </ion-item-group>
-        <ion-item-group>
-            <ion-item-divider color="light">
-                <ion-label>Y</ion-label>
-            </ion-item-divider>
-        </ion-item-group>
-        <ion-item-group>
-            <ion-item-divider color="light">
-                <ion-label>Z</ion-label>
-            </ion-item-divider>
         </ion-item-group>
     </ion-list>
 </ion-content>

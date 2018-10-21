@@ -3,8 +3,10 @@ import {ActionSheetController, IonicPage, NavController, NavParams} from 'ionic-
 import {IExercise} from "../../providers/models/exercise-model";
 import {AngularFireDatabase} from "@angular/fire/database";
 import {HttpClient} from "@angular/common/http";
-import * as moment from 'moment';
+// import * as moment from 'moment';
 import {MockupsProvider} from "../../providers/mockups/mockups";
+import {ExercisesProvider} from "../../providers/exercises/exercises";
+import "rxjs-compat/add/operator/finally";
 
 @IonicPage()
 @Component({
@@ -13,7 +15,9 @@ import {MockupsProvider} from "../../providers/mockups/mockups";
 })
 export class ExercisesPage {
 
-    public exercisesList: IExercise[] = [];
+    public exercisesList: IExercise[];
+    public sortedExercicesList: Object;
+    public sortedExercicesListKeys: string[];
 
     constructor(
         public navCtrl: NavController,
@@ -21,57 +25,22 @@ export class ExercisesPage {
         private exercisesMockupsService: MockupsProvider,
         private actionSheetCtrl: ActionSheetController,
         private db: AngularFireDatabase,
-        private httpGet: HttpClient) {
+        private httpGet: HttpClient,
+        private exercisesService: ExercisesProvider) {
 
     }
 
-    public ngOnInit(): void {
-        this.generateExercisesMockups();
-    }
-
-    ionViewDidLoad() {
-        console.log('ionViewDidLoad ExercisesPage');
-        // this.db.object('exercises').valueChanges().subscribe(wsReturn => {
-        //     console.log(wsReturn);
-        // });
-        // const pushId = this.db.createPushId();
-        // this.db.object(`exercises/${pushId}`).set({
-        //     test: pushId
-        // });
-    }
-
-    public resetExercisesData(): void {
-        this.db.object('exercises').set(null);
-    }
-
-    public generateExercisesMockups(): void {
-
-        this.resetExercisesData();
-
-        this.httpGet.get('assets/mocks/exercises1.json').subscribe((data: IExercise[]) => {
-            if (data && data.length) {
-                data.forEach((exercise: IExercise) => {
-                    const uniqueId: string = this.db.createPushId();
-                    exercise.id = uniqueId;
-                    exercise.creationDate = moment(exercise.creationDate).format();
-
-                    if (exercise.lastEditDate) {
-                        exercise.lastEditDate = moment(exercise.lastEditDate).format();
-                    }
-
-                    this.db.object(`exercises/${uniqueId}`).set(exercise);
-                });
-            }
+    public ionViewWillEnter(): void {
+        this.sortedExercicesList = {};
+        this.sortedExercicesListKeys = [];
+        this.exercisesList = [];
+        // We get the exercises here
+        this.exercisesService.getAllExercises().subscribe(wsExercises => {
+            this.exercisesList = wsExercises;
+            this.sortExericesByLetter();
+        }, error => {
+            alert(error);
         });
-
-        this.exercisesMockupsService.getMockupsExercises().finally(() => {
-
-        }).subscribe((wsReturn: IExercise[]) => {
-            this.exercisesList = wsReturn;
-        }, (error) => {
-            alert(JSON.stringify(error));
-        });
-
     }
 
     public onExerciseItemClicked(exercise: IExercise): void {
@@ -109,4 +78,16 @@ export class ExercisesPage {
         actionSheet.present();
     }
 
+    private sortExericesByLetter(): void {
+        // We iterate on the exercises list
+        this.exercisesList.forEach((exercise: IExercise) => {
+            const firstLetter: string = exercise.name[0];
+            if (!(firstLetter in this.sortedExercicesList)) {
+                this.sortedExercicesList[firstLetter] = [];
+            }
+            this.sortedExercicesList[firstLetter].push(exercise);
+        });
+        this.sortedExercicesListKeys = Object.keys(this.sortedExercicesList).sort();
+        console.log('this.sortedExercicesList', this.sortedExercicesList);
+    }
 }

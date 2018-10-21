@@ -18,6 +18,8 @@ import {AngularFireStorageModule} from "@angular/fire/storage";
 import {Media} from '@ionic-native/media';
 import {HttpClientModule} from "@angular/common/http";
 import {MockupsProvider} from "../providers/mockups/mockups";
+import { ExercisesProvider } from '../providers/exercises/exercises';
+import {PipesModule} from "../pipes/pipes.module";
 
 const firebaseConf = {
     apiKey: "AIzaSyDsRZHPp-TGqvU-0GqyWKFDcLjQWJD7HLo",
@@ -45,7 +47,8 @@ const firebaseConf = {
         AngularFireAuthModule,
         AngularFireDatabaseModule,
         AngularFireStorageModule,
-        HttpClientModule
+        HttpClientModule,
+        PipesModule
     ],
     bootstrap: [IonicApp],
     entryComponents: [
@@ -63,7 +66,8 @@ const firebaseConf = {
         GooglePlus,
         SplashScreen,
         {provide: ErrorHandler, useClass: IonicErrorHandler},
-        MockupsProvider
+        MockupsProvider,
+        ExercisesProvider
     ]
 })
 export class AppModule {
