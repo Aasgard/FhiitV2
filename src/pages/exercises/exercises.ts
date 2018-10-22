@@ -43,6 +43,10 @@ export class ExercisesPage {
         });
     }
 
+    public onAddExercisesButtonClicked(): void {
+        alert('Ouverture de la modale d\'ajout');
+    }
+
     public onExerciseItemClicked(exercise: IExercise): void {
         // Ajouter aux favoris
         // Modifier
@@ -58,13 +62,13 @@ export class ExercisesPage {
                 }, {
                     text: 'Modifier',
                     handler: () => {
-                        console.log('Archive clicked');
+                        console.log('Open CreateModifyExercise modal');
                     }
                 }, {
                     text: 'Ajouter aux favoris',
                     cssClass: 'green-actionsheet-button',
                     handler: () => {
-                        console.log('Destructive clicked');
+                        console.log('Trigger AddToFavoriteExercises method');
                     }
                 }, {
                     text: 'Annuler',

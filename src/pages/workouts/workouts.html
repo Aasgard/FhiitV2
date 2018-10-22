@@ -7,13 +7,21 @@
 <ion-content padding>
     <ion-card>
         <ion-card-content>
-            Page des workouts
+            <strong>Page des workouts</strong>
         </ion-card-content>
     </ion-card>
 
-    <ion-card>
+    <!--<ion-card>-->
+        <!--<ion-card-content>-->
+            <!--{{ data | json }}-->
+        <!--</ion-card-content>-->
+    <!--</ion-card>-->
+
+
+    <ion-card *ngFor="let item of data">
         <ion-card-content>
-            {{ data | json }}
+            {{ item | json }}
         </ion-card-content>
     </ion-card>
+
 </ion-content>

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {AngularFireDatabase} from "@angular/fire/database";
 import {IExercise} from "../models/exercise-model";
 import {Observable} from "rxjs";
+import {FirebaseListObservable} from "@angular/fire/database-deprecated";
 
 @Injectable()
 export class ExercisesProvider {
