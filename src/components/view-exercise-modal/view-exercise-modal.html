@@ -1,0 +1,27 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>
+            {{ inputExercise.id }}
+        </ion-title>
+        <ion-buttons start>
+            <button ion-button (click)="dismiss()">
+                <span ion-text color="primary">Fermer</span>
+                <!--<ion-icon name="md-close" showWhen="android,windows"></ion-icon>-->
+            </button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+    <div class="test-photo-bg"></div>
+
+    <ion-card style="margin-top: -60px;">
+        <ion-card-header>
+            {{ inputExercise.name }}
+        </ion-card-header>
+        <ion-card-content>
+            {{ inputExercise | json }}
+        </ion-card-content>
+    </ion-card>
+</ion-content>

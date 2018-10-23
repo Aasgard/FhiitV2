@@ -18,8 +18,10 @@ import {AngularFireStorageModule} from "@angular/fire/storage";
 import {Media} from '@ionic-native/media';
 import {HttpClientModule} from "@angular/common/http";
 import {MockupsProvider} from "../providers/mockups/mockups";
-import { ExercisesProvider } from '../providers/exercises/exercises';
+import {ExercisesProvider} from '../providers/exercises/exercises';
 import {PipesModule} from "../pipes/pipes.module";
+import {LoaderProvider} from '../providers/loader/loader';
+import {ViewExerciseModalComponent} from "../components/view-exercise-modal/view-exercise-modal";
 
 const firebaseConf = {
     apiKey: "AIzaSyDsRZHPp-TGqvU-0GqyWKFDcLjQWJD7HLo",
@@ -38,7 +40,8 @@ const firebaseConf = {
         LoginPage,
         WorkoutsPage,
         ExercisesPage,
-        OptionsPage
+        OptionsPage,
+        ViewExerciseModalComponent
     ],
     imports: [
         BrowserModule,
@@ -58,7 +61,8 @@ const firebaseConf = {
         LoginPage,
         WorkoutsPage,
         ExercisesPage,
-        OptionsPage
+        OptionsPage,
+        ViewExerciseModalComponent
     ],
     providers: [
         Media,
@@ -67,7 +71,8 @@ const firebaseConf = {
         SplashScreen,
         {provide: ErrorHandler, useClass: IonicErrorHandler},
         MockupsProvider,
-        ExercisesProvider
+        ExercisesProvider,
+        LoaderProvider
     ]
 })
 export class AppModule {

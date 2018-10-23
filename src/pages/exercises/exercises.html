@@ -5,12 +5,18 @@
 </ion-header>
 
 <ion-content>
-    <ion-list [ngStyle]="{'margin-bottom': 0}">
+    <ion-list [ngStyle]="{'margin-bottom': 0}" *ngIf="!loaderService.loaderIsVisible()">
         <ion-item-group>
             <ion-item-divider color="light">
                 <ion-icon name="star" item-start></ion-icon>
                 <ion-label>Favoris</ion-label>
             </ion-item-divider>
+            <button ion-item detail-none *ngFor="let exercise of favoriteExercisesList"
+                    (click)="onExerciseItemClicked(exercise)">
+                <ion-icon name="flame" color="danger" item-start *ngIf="exercise.isFavorite"></ion-icon>
+                <ion-label>{{ exercise.name }}</ion-label>
+                <ion-icon name="menu" item-end></ion-icon>
+            </button>
         </ion-item-group>
         <ion-item-group *ngFor="let categoryLetter of sortedExercicesListKeys">
             <ion-item-divider color="light">

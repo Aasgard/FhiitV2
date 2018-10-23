@@ -1,0 +1,11 @@
+view-exercise-modal {
+  .test-photo-bg {
+    height: 40vh;
+    width: 100%;
+    background-size: contain;
+    background-image: url("/assets/imgs/testphoto.jpeg");
+    background-repeat: no-repeat;
+    background-color: black;
+    background-position: center;
+  }
+}

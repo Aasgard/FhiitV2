@@ -1,5 +1,12 @@
 import {Component} from '@angular/core';
-import {ActionSheetController, IonicPage, NavController, NavParams} from 'ionic-angular';
+import {
+    ActionSheetController,
+    IonicPage,
+    LoadingController,
+    ModalController,
+    NavController,
+    NavParams
+} from 'ionic-angular';
 import {IExercise} from "../../providers/models/exercise-model";
 import {AngularFireDatabase} from "@angular/fire/database";
 import {HttpClient} from "@angular/common/http";
@@ -7,6 +14,8 @@ import {HttpClient} from "@angular/common/http";
 import {MockupsProvider} from "../../providers/mockups/mockups";
 import {ExercisesProvider} from "../../providers/exercises/exercises";
 import "rxjs-compat/add/operator/finally";
+import {LoaderProvider} from "../../providers/loader/loader";
+import {ViewExerciseModalComponent} from "../../components/view-exercise-modal/view-exercise-modal";
 
 @IonicPage()
 @Component({
@@ -16,31 +25,25 @@ import "rxjs-compat/add/operator/finally";
 export class ExercisesPage {
 
     public exercisesList: IExercise[];
+    public favoriteExercisesList: IExercise[];
     public sortedExercicesList: Object;
     public sortedExercicesListKeys: string[];
 
     constructor(
         public navCtrl: NavController,
         public navParams: NavParams,
+        public loaderService: LoaderProvider,
         private exercisesMockupsService: MockupsProvider,
         private actionSheetCtrl: ActionSheetController,
         private db: AngularFireDatabase,
+        private modalCtrl: ModalController,
         private httpGet: HttpClient,
         private exercisesService: ExercisesProvider) {
 
     }
 
     public ionViewWillEnter(): void {
-        this.sortedExercicesList = {};
-        this.sortedExercicesListKeys = [];
-        this.exercisesList = [];
-        // We get the exercises here
-        this.exercisesService.getAllExercises().subscribe(wsExercises => {
-            this.exercisesList = wsExercises;
-            this.sortExericesByLetter();
-        }, error => {
-            alert(error);
-        });
+        this.getExercises();
     }
 
     public onAddExercisesButtonClicked(): void {
@@ -57,7 +60,8 @@ export class ExercisesPage {
                 {
                     text: 'Voir',
                     handler: () => {
-                        alert(JSON.stringify(exercise));
+                        let viewExercise = this.modalCtrl.create(ViewExerciseModalComponent, { inputExercise: exercise });
+                        viewExercise.present();
                     }
                 }, {
                     text: 'Modifier',
@@ -65,10 +69,9 @@ export class ExercisesPage {
                         console.log('Open CreateModifyExercise modal');
                     }
                 }, {
-                    text: 'Ajouter aux favoris',
-                    cssClass: 'green-actionsheet-button',
+                    text: exercise.isFavorite ? 'Supprimer des favoris' : 'Ajouter aux favoris',
                     handler: () => {
-                        console.log('Trigger AddToFavoriteExercises method');
+                        exercise.isFavorite ? console.log('Suppression de favori') : console.log('Ajout de favori');
                     }
                 }, {
                     text: 'Annuler',
@@ -80,6 +83,31 @@ export class ExercisesPage {
             ]
         });
         actionSheet.present();
+    }
+
+    private buildFavoriteExercises(): void {
+        this.favoriteExercisesList = this.exercisesList.filter(exercise => exercise.isFavorite);
+    }
+
+    private getExercises(): void {
+        this.loaderService.displayLoader();
+        this.sortedExercicesList = {};
+        this.sortedExercicesListKeys = [];
+        this.favoriteExercisesList = [];
+        this.exercisesList = [];
+        // We get the exercises here
+        this.exercisesService.getAllExercises().subscribe(wsExercises => {
+            this.exercisesList = wsExercises;
+            // We build the Favorites
+            this.buildFavoriteExercises();
+            // We sort the Exercises by letter
+            this.sortExericesByLetter();
+            // We hide the loader when scripts are over
+            this.loaderService.hideLoader();
+        }, error => {
+            alert(error);
+            this.loaderService.hideLoader();
+        });
     }
 
     private sortExericesByLetter(): void {
